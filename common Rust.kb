@@ -1,0 +1,148 @@
+knowledgewright_jig(basic, 7).
+
+
+
+% folder
+
+:- sorted(folder/3).
+
+
+
+% knowledgebase
+
+:- sorted(knowledgebase/3).
+
+knowledgebase(main, /, [
+   description = "",
+   goals = [Conditions],
+   odbc = "",
+   question_separator = "<P>",
+   menu_separator = "<BR>",
+   value_separator = "<P>",
+   question_top = text("<HTML><HEAD></HEAD><BODY><FORM METHOD=""POST"" ACTION=""/cgi-bin/kwcgibasic.exe" + system(cgi_parameters) + """>"),
+   question_bottom = text("<P><INPUT NAME=""Submit"" TYPE=""Submit"" VALUE=""Submit""></INPUT> <INPUT TYPE=""Reset"" VALUE=""Reset""></INPUT></FORM></BODY></HTML>"),
+   output_top = text("<HTML><HEAD></HEAD><BODY>"),
+   output_continue = text("<FORM METHOD=""POST"" ACTION=""/cgi-bin/kwcgibasic.exe" + system(cgi_parameters) + """><INPUT NAME=""Submit"" TYPE=""Submit"" VALUE=""Continue""></INPUT></FORM>"),
+   output_bottom = text("</BODY></HTML>")
+   ]).
+
+
+
+% fact
+
+:- sorted(fact/3).
+
+
+
+% question
+
+:- sorted(question/3).
+
+question(Case_1, /, [
+   prompt = text("Are there reddish-brown pustules on both sides of the maize leaves, stems or other parts?"),
+   question_type = menu_single_choice,
+   question_style = listbox,
+   choices = ["yes", "no"],
+   'rule-display_choices' = [["rule_text", "display_text"]],
+   answer_type = text,
+   length = 20,
+   default = "",
+   ask_also = '[]'
+   ]).
+
+question(Case_2, /, [
+   prompt = text("Is there an increase in lesion density, creating a rusty or powdery appearance?"),
+   question_type = menu_single_choice,
+   question_style = listbox,
+   choices = ["yes", "no"],
+   'rule-display_choices' = [["rule_text", "display_text"]],
+   answer_type = text,
+   length = 20,
+   default = "",
+   ask_also = '[]'
+   ]).
+
+question(Case_3, /, [
+   prompt = text("Are the maize leaves showing signs of discoloration, turning yellow or brown around the pustles?"),
+   question_type = menu_single_choice,
+   question_style = listbox,
+   choices = ["yes", "no"],
+   'rule-display_choices' = [["rule_text", "display_text"]],
+   answer_type = text,
+   length = 20,
+   default = "",
+   ask_also = '[]'
+   ]).
+
+question(Case_4, /, [
+   prompt = text("Is there evidence of stunted growth in the maize plant?"),
+   question_type = menu_single_choice,
+   question_style = listbox,
+   choices = ["yes", "no"],
+   'rule-display_choices' = [["rule_text", "display_text"]],
+   answer_type = text,
+   length = 20,
+   default = "",
+   ask_also = '[]'
+   ]).
+
+question(Case_5, /, [
+   prompt = text("Are leaves dying and senescing earlier than normal?"),
+   question_type = menu_single_choice,
+   question_style = listbox,
+   choices = ["yes", "no"],
+   'rule-display_choices' = [["rule_text", "display_text"]],
+   answer_type = text,
+   length = 20,
+   default = "",
+   ask_also = '[]'
+   ]).
+
+question(Case_6, /, [
+   prompt = text("Is there any impact on the yields, such as reduced grain development?"),
+   question_type = menu_single_choice,
+   question_style = listbox,
+   choices = ["yes", "no"],
+   'rule-display_choices' = [["rule_text", "display_text"]],
+   answer_type = text,
+   length = 20,
+   default = "",
+   ask_also = '[]'
+   ]).
+
+
+
+% sql
+
+:- sorted(sql/3).
+
+
+
+% rule_set
+
+:- sorted(rule_set/3).
+
+rule_set(Conditions, /, [
+   description = "Do you have the following symptoms?",
+   type = single_value,
+   rules = [[conditions, value], [Case_1 = "yes" and Case_2 = "no" and Case_3 = "no" and Case_4 = "no" and Case_5 = "no" and Case_6 = "no", text("The crop does not have common rust infection. Do further enquiries to check for other possible diseases.")], [Case_1 = "yes" and Case_2 = "no" and Case_3 = "yes" and Case_4 = "no" and Case_5 = "yes" and Case_6 = "no", text("There is a possibility of the common rust disease.")], [Case_1 = "yes" and Case_2 = "yes" and Case_3 = "no" and Case_4 = "no" and Case_5 = "yes" and Case_6 = "yes", text("The crop might be infected with the common rust disease.")], [Case_1 = "yes" and Case_2 = "yes" and Case_3 = "yes" and Case_4 = "no" and Case_5 = "no" and Case_6 = "no", text("The crop does not have common rust infection. Do further enquiries to check for other possible diseases.")], [Case_1 = "yes" and Case_2 = "no" and Case_3 = "yes" and Case_4 = "yes" and Case_5 = "no" and Case_6 = "yes", text("The crop does not have common rust infection. Do further enquiries to check for other possible diseases.")], [Case_1 = "no" and Case_2 = "yes" and Case_3 = "yes" and Case_4 = "no" and Case_5 = "yes" and Case_6 = "yes", text("The crop does not have common rust infection. Do further enquiries to check for other possible diseases.")], [Case_1 = "yes" and Case_2 = "yes" and Case_3 = "yes" and Case_4 = "yes" and Case_5 = "yes" and Case_6 = "yes", text("The crop does not have common rust infection. Do further enquiries to check for other possible diseases.")], [Case_1 = "yes" and Case_2 = "yes" and Case_3 = "no" and Case_4 = "yes" and Case_5 = "yes" and Case_6 = "no", text("The crop does not have common rust infection. Do further enquiries to check for other possible diseases.")]]
+   ]).
+
+rule_set('my rulee ', /, [
+   description = "",
+   type = single_value,
+   rules = [[conditions, value]]
+   ]).
+
+
+
+% table
+
+:- sorted(table/3).
+
+
+
+% text
+
+:- sorted(text/3).
+
